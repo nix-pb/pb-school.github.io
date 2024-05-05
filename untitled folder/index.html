@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Gaegu' rel='stylesheet'>
+    <title>....</title>
+    <style>
+
+        body 
+        {
+            transform: scale(0.5);
+            transform-origin: 0 0;
+        }
+
+        .container 
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #gifContainer 
+        {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text 
+        {
+            font-family: 'Gaegu';
+            font-size: 40px;
+            color: #EBA798;
+            text-shadow: 
+            -0.5px -0.5px 0 #D69174,  
+            0.5px -0.5px 0 #D69174,
+            -0.5px  0.5px 0 #D69174,
+            0.5px  0.5px 0 #D69174;
+            margin-bottom: 10px;
+        }
+
+        .button 
+        {
+            appearance: button;
+            background-color: #D69174;
+            border: solid transparent;
+            border-radius: 16px;
+            border-width: 0 0 4px;
+            box-sizing: border-box;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-family: din-round,sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: .8px;
+            line-height: 20px;
+            margin: 0;
+            outline: none;
+            overflow: visible;
+            padding: 13px 16px;
+            text-align: center;
+            text-transform: uppercase;
+            touch-action: manipulation;
+            transform: translateZ(0);
+            transition: filter .2s;
+            user-select: none;
+            -webkit-user-select: none;
+            vertical-align: middle;
+            white-space: nowrap;
+            width: 30%;
+            z-index: 1000;
+        }
+
+        .button:after 
+        {
+            background-clip: padding-box;
+            background-color: #e29a7b;
+            border: solid transparent;
+            border-radius: 16px;
+            border-width: 0 0 4px;
+            bottom: -4px;
+            content: "";
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: -1;
+        }
+
+
+
+
+        .button:hover:not(:disabled) 
+        {
+            filter: brightness(1.1);
+            -webkit-filter: brightness(1.1);
+        }
+
+        .button:disabled 
+        {
+            cursor: auto;
+        }
+
+        .button:active 
+        {
+            border-width: 4px 0 0;
+            background: none;
+        }
+
+        .frame 
+        {
+            width: 100%;
+            max-width: 550px;
+            height: 100%;
+            max-height: 350px;
+            margin: 50px auto 0;
+            position: relative;
+            background: #435d77;
+            border-radius: 0 0 40px 40px;
+            margin-top: 300px;
+        }
+
+        #button_open_envelope 
+        {
+            width: 180px;
+            height: 60px;
+            position: absolute;
+            z-index: 311;
+            bottom: 25%;
+            left: 57.5%;
+            border-radius: 10px;
+            color: #c96397;
+            font-size: 26px;
+            transform: translateX(-50%);
+            transition: 0.3s;
+            font-size: 8em;
+            align-items: center;
+        }
+
+        #button_open_envelope:hover 
+        {
+            color: #e62828;
+            transform: translateX(-50%) scale(1.1);
+            transition: background 0.25s, transform 0.5s, ease-in;
+            cursor: pointer;
+        }
+
+        .message 
+        {
+            position: relative;
+            width: 100%;
+            min-height: 300px;
+            height: auto;
+            background-size: auto;
+            background-image: url('gif/paper.png');
+            margin: 0 auto;
+            bottom: 0;
+            transition: 3000s ease-in;
+            transition-delay: 1.5s;
+            z-index: 309;
+        }
+
+        #textMessage, 
+        #textMessage2
+        {
+            font-family: cursive;
+            font-size: 18px;
+            color: #94908d5e;
+            text-align: left;
+            border-radius: 5px;
+            margin-left: 80px;
+            margin-right: 60px;
+        }
+
+        #textMessage::first-letter 
+        {
+            font-size: 24px;
+            color:  #6f6761;
+        }
+
+        #textHeader 
+        {
+            font-family: cursive;
+            font-size: 16px;
+            color: #6f6761;
+            text-align: justify;
+            padding-top: 30px;
+            margin-left: 25px;
+            border-radius: 5px;
+        }
+
+        #textHeader::first-letter 
+        {
+            font-size: 20px;
+            color:  #6f6761;
+        }
+
+        .left,
+        .right,
+        .top 
+        {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .left 
+        {
+            background: #e990be;
+            clip-path: polygon(0 0, 0 90%, 50% 50%);
+            z-index: 310;
+        }
+
+        .right 
+        {
+            background: #e990be;
+            clip-path: polygon(100% 0, 100% 90%, 50% 50%);
+            z-index: 310;
+        }
+
+        .top 
+        {
+            background: #ecadcd;
+            clip-path: polygon(0 0, 100% 0, 50% 62.5%);
+            transition: transform 1s, border 1s, ease-in;
+            transform-origin: top;
+            transform: rotateX(0deg);
+            z-index: 500;
+        }
+
+        .bottom 
+        {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            bottom: 0;
+            background: #c96397;
+            border-radius: 0 0 30px 30px;
+            z-index: 300;
+        }
+
+        .bottum 
+        {
+            width: 100%;
+            height: 50%;
+            position: absolute;
+            bottom: 0;
+            background: #e974b1;
+            border-radius: 0 0 30px 30px;
+            z-index: 309;
+        }
+
+        .open 
+        {
+            transform-origin: top;
+            transform: rotateX(180deg);
+            transition: transform 0.7s, border 0.7s, z-index 0.7s ease-in;
+            border-top: 200px solid #ecadcd;
+            z-index: 300;
+        }
+
+        .pull 
+        {
+            -webkit-animation: slideOut 2s ease-in forwards;
+            animation: slideOut 2s ease-in forwards;
+            -webkit-animation-delay: 0.9s;
+            animation-delay: 0.45s;
+            transition: 1.5s;
+            transition-delay: 1s;
+            z-index: 308;
+        }
+
+        @keyframes slideOut 
+        {
+            from 
+            {
+                transform: translateY(0%);
+            }
+            to 
+            {
+                transform: translateY(-90%);
+            }
+        }
+
+        body 
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+
+       .typing 
+       {
+            font-family: 'Gaegu';
+            font-size: 40px;
+            color: #EBA798;
+            text-shadow: 
+            -0.5px -0.5px 0 #D69174,  
+            0.5px -0.5px 0 #D69174,
+            -0.5px  0.5px 0 #D69174,
+            0.5px  0.5px 0 #D69174;
+            margin-bottom: 10px;
+        }
+
+        .random-div {
+            position: absolute;
+        }
+
+        .cuteButton 
+        {
+            position: relative;
+            padding: 10px 22px;
+            border-radius: 16px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            background-color: #EBA798;
+            transition: all 0.2s ease;
+            z-index: 10000;
+
+            transition: all ease 0.1s;
+            box-shadow: 0px 5px 0px 0px #D69174;
+            margin-top: 10px;
+        }
+
+        .cuteButton:hover 
+        {
+            transform: scale(0.96);
+
+            box-shadow: 0px 5px 0px 0px #D69174;
+        }
+
+        .cuteButton:before,
+        .cuteButton:after 
+        {
+            position: absolute;
+            content: "";
+            width: 150%;
+            left: 50%;
+            height: 100%;
+            transform: translateX(-50%);
+            z-index: -1000;
+            background-repeat: no-repeat;
+        }
+
+        .cuteButton:active:before 
+        {
+            top: -70%;
+            background-image: 
+                radial-gradient(circle, #D69174 20%, transparent 20%),
+                radial-gradient(circle, transparent 20%, #EBA798 20%, transparent 30%),
+                radial-gradient(circle, #EBA798 20%, transparent 20%),
+                radial-gradient(circle, #D69174 20%, transparent 20%),
+                radial-gradient(circle, transparent 10%, #EBA798 15%, transparent 20%),
+                radial-gradient(circle, #EBA798 20%, transparent 20%),
+                radial-gradient(circle, #D69174 20%, transparent 20%),
+                radial-gradient(circle, #D69174 20%, transparent 20%),
+                radial-gradient(circle, #EBA798 20%, transparent 20%);
+            background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+                10% 10%, 18% 18%;
+            background-position: 50% 120%;
+            animation: greentopBubbles 0.6s ease;
+        }
+
+        @keyframes greentopBubbles 
+        {
+            0% 
+            {
+                background-position: 5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+                    40% 90%, 55% 90%, 70% 90%;
+            }
+
+            50% 
+            {
+                background-position: 0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+                    50% 50%, 65% 20%, 90% 30%;
+            }
+
+            100% 
+            {
+                background-position: 0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+                    50% 40%, 65% 10%, 90% 20%;
+                background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+
+        .cuteButton:active::after 
+        {
+            bottom: -70%;
+            background-image: 
+            radial-gradient(circle, #D69174 20%, transparent 20%),
+            radial-gradient(circle, #D69174 20%, transparent 20%),
+            radial-gradient(circle, transparent 10%, #EBA798 15%, transparent 20%),
+            radial-gradient(circle, #D69174 20%, transparent 20%),
+            radial-gradient(circle, #EBA798 20%, transparent 20%),
+            radial-gradient(circle, #D69174 20%, transparent 20%),
+            radial-gradient(circle, #EBA798 20%, transparent 20%);
+            background-size: 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 20% 20%, 18% 18%;
+            background-position: 50% 0%;
+            animation: greenbottomBubbles 0.6s ease;
+        }
+
+        @keyframes greenbottomBubbles 
+        {
+            0% 
+            {
+                background-position: 10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%,
+                    70% -10%, 70% 0%;
+            }
+
+            50% 
+            {
+                background-position: 0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%,
+                    105% 0%;
+            }
+
+            100% 
+            {
+                background-position: 0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%,
+                    110% 10%;
+                background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+            }
+        }
+
+        .decisionButton 
+        {
+            background: transparent;
+            color: #94908d5e;
+            cursor: pointer;
+            font-family: cursive;
+            font-size: 18px;
+            border: none;
+            margin-left: 90px;
+            font-weight: bold;
+        }
+
+
+    </style>
+</head>
+<body >
+
+        <div class="frame" id="envelope" style="display: none;" >
+
+            <div id="button_open_envelope">
+                &#9829
+            </div>
+            <div class="message">
+              <h1 id="textHeader">
+                To Hannah :
+              </h1>
+              <h2 id="textMessage"></h2>
+              <h2 id="textMessage2"></h2>
+            <div class="decision" id="buttonYesNo">
+                <button class="decisionButton" id="yesButton" onclick="yesButton()">Yes</button>
+                <button class="decisionButton" id="noButton"onclick="popUpNo()">No</button>
+            </div>
+            </div>
+            <div class="bottum"></div>
+            <div class="bottom"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+            <div class="top"></div>
+          
+          </div>
+
+
+    <div class="container">
+        <div class="typing" id="typing"></div>
+        <div class="text" id="displayText">Wassssuuuuupp</div>
+        <div id="gifContainer">
+            <img src="https://i.pinimg.com/originals/68/0c/da/680cdab9318622cadd03f53ba7e8149c.gif" alt="Error call pb" id="gifImage" loop>
+        </div>
+        <button id="delayedButton" class="button" onclick="changeGIF(); replaceButton()">>>></button>
+    </div>
+        <button class="cuteButton" id="cutePressMe" onclick="createRandomDiv()">Press Me</button>
+    
+
+    <audio id="buttonSound">
+        <source src="audio/dun.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="bgmusic" preload="auto" >
+        <source src="audio/bgsound.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="oofSound">
+        <source src="audio/oof.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="backgroundMusic">
+        <source src="audio/bgmusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="numberingMusic">
+        <source src="audio/numberingmusic.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="letterMusic">
+        <source src="audio/lettermusic.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <script>
+        var gifUrls = 
+    
+        [
+            { src: "https://i.pinimg.com/originals/f2/fa/7d/f2fa7d29b2e2556e0535fbb3a0cd8cfb.gif", width: 250, height: 100, text: "...volume uppp...."},
+            { src: "https://i.pinimg.com/564x/94/8b/41/948b41872ff56bf5a170b6ae19387cef.jpg", width: 270, height: "auto", text: "First of all..."},
+            { src: "https://i.pinimg.com/564x/4e/8a/47/4e8a4725e1a52084499684d616a744ea.jpg", width: 200, height: 200, text: "....."},
+            { src: "https://i.pinimg.com/564x/94/8b/41/948b41872ff56bf5a170b6ae19387cef.jpg", width: 270, height: "auto", text: "Secondly..." },
+            { src: "https://i.pinimg.com/564x/4e/8a/47/4e8a4725e1a52084499684d616a744ea.jpg", width: 200, height: 200, text: "....."},
+            { src: "https://i.pinimg.com/originals/7d/5f/aa/7d5faa108df90eec23c342b97de56d37.gif", width: 200, height: 200, text: "de jk lang uy T_T"},
+            { src: "https://i.pinimg.com/originals/25/56/1c/25561c00c71fe29a8f32cefbdbe94e9b.gif", width: 200, height: 200, text: "but..."},
+            { src: "https://i.pinimg.com/originals/54/cd/92/54cd92749951143250d079c87c31a907.gif", width: 200, height: 200, text: "....."},
+            { src: "https://i.pinimg.com/originals/cd/e4/d3/cde4d3b66d0a24c387cb61dd4e1a891b.gif", width: 200, height: 500, text: "....."},
+        ];
+
+        var currentGifIndex = 0;
+        var gifImage = document.getElementById('gifImage');
+        var displayText = document.getElementById('displayText');
+        var audioButton = document.getElementById('buttonSound');
+        var audioBg = document.getElementById('bgmusic');
+        var oof = document.getElementById('oofSound');
+        var oof = document.getElementById('backgroundMusic');
+        var oof = document.getElementById('numberingMusic');
+        var oof = document.getElementById('letterMusic');
+        
+        delayButtonVisibility('cutePressMe', 1000000);
+
+        function changeGIF() 
+        {
+            var currentGif = gifUrls[currentGifIndex];
+
+            currentGifIndex = (currentGifIndex + 1);
+         
+            gifImage.src = currentGif.src;
+            gifImage.style.width = currentGif.width + 'px';
+            gifImage.style.height = currentGif.height;
+            displayText.textContent = currentGif.text;
+
+            
+            
+            if (currentGif.src === "https://i.pinimg.com/originals/f2/fa/7d/f2fa7d29b2e2556e0535fbb3a0cd8cfb.gif")
+            {
+                delayButtonVisibility('cutePressMe', 1000000);
+                delayButtonVisibility('delayedButton', 4000);
+                document.getElementById('backgroundMusic').play();     
+            } 
+            else if (currentGif.src === "https://i.pinimg.com/564x/94/8b/41/948b41872ff56bf5a170b6ae19387cef.jpg")
+            {
+                delayButtonVisibility('cutePressMe', 1000000);
+                delayButtonVisibility('delayedButton', 3500);
+                continueMusic('backgroundMusic');
+            }
+            else if (currentGif.src === "https://i.pinimg.com/564x/4e/8a/47/4e8a4725e1a52084499684d616a744ea.jpg")
+            {
+                delayButtonVisibility('cutePressMe', 1000000);
+                delayButtonVisibility('delayedButton', 3000);
+                pauseMusic('backgroundMusic');
+                document.getElementById("buttonSound").play();
+            }
+            else if (currentGif.src === "https://i.pinimg.com/originals/7d/5f/aa/7d5faa108df90eec23c342b97de56d37.gif")
+            {
+                delayButtonVisibility('cutePressMe', 1000000);
+                delayButtonVisibility('delayedButton', 3000);
+                
+            }
+            else if (currentGif.src === "https://i.pinimg.com/originals/25/56/1c/25561c00c71fe29a8f32cefbdbe94e9b.gif")
+            {
+                delayButtonVisibility('cutePressMe', 1000000);
+                delayButtonVisibility('delayedButton', 4000);
+                typeSentence("...I just wanna say that...", 0);
+                removeDiv();
+            }
+            else if (currentGif.src === "https://i.pinimg.com/originals/54/cd/92/54cd92749951143250d079c87c31a907.gif")
+            {
+                continueMusic('letterMusic');
+                delayButtonVisibility('cutePressMe', 8000);
+                delayButtonVisibility('delayedButton', 25000);
+                clearDiv();
+                typeSentence("1.) doubt yourself all you want but for me you are the cutest OKI, you are very pretty, maganda ka po", 0);
+                removeDiv();
+            }
+            else if (currentGif.src === "https://i.pinimg.com/originals/cd/e4/d3/cde4d3b66d0a24c387cb61dd4e1a891b.gif")
+            {
+                delayButtonVisibility('cutePressMe', 1000000);
+                delayButtonVisibility('delayedButton', 13000);
+                clearDiv();
+                typeSentence("2.) Even though I may not be able to show you that i like or appreatiate you from time to time, but do believe that i do ", 0);
+                removeDiv();
+            }
+        }
+
+        var buttonPressCount = 0;
+
+        function buttonClickHandler() 
+        {
+            buttonPressCount++;
+
+            if (buttonPressCount == 10) 
+            {
+                removeButton();
+                removeGif();
+                removeLabel();
+                showHiddenEnvelope();               
+            }
+        }
+
+        document.getElementById('delayedButton').addEventListener('click', buttonClickHandler)
+
+
+        var typingElement = document.getElementById('typing');
+
+        function typeSentence(sentence, index) 
+        {
+            if (index >= sentence.length) return;
+
+            var char = sentence.charAt(index);
+            typingElement.textContent += char;
+            setTimeout(function() {
+                typeSentence(sentence, index + 1);
+            }, 65);
+        }
+
+
+        var typingLetter = document.getElementById('textMessage');
+
+        function typeLetter(sentence, index) 
+        {
+            if (index >= sentence.length) return;
+
+            var char = sentence.charAt(index);
+            typingLetter.textContent += char;
+            setTimeout(function() {
+                typeLetter(sentence, index + 1);
+            }, 100);
+        }
+
+        function clearDiv() 
+        {
+            document.getElementById("typing").innerHTML = "";
+        }
+
+        function removeDiv() 
+        {
+            var container = document.querySelector('.container');
+            var divToRemove = document.getElementById('displayText');
+            container.removeChild(divToRemove);
+        }
+
+        function removeLabel() 
+        {
+            var container = document.querySelector('.container');
+            var divToRemove = document.getElementById('typing');
+            container.removeChild(divToRemove);
+        }
+
+        function removeButton() 
+        {
+            var container = document.querySelector('.container');
+            var divToRemove = document.getElementById('delayedButton');
+            container.removeChild(divToRemove);
+        }
+
+        function removeGif() 
+        {
+            var container = document.querySelector('.container');
+            var divToRemove = document.getElementById('gifContainer');
+            container.removeChild(divToRemove);
+        }
+
+        function delayButtonVisibility(buttonId, delayMilliseconds) 
+        {
+            var button = document.getElementById(buttonId);
+            if (button) 
+            {
+                button.style.visibility = 'hidden'; 
+                setTimeout(function() 
+                {
+                    button.style.visibility = 'visible';
+                }, delayMilliseconds);
+            }
+        }
+
+        function pauseMusic(audioId) 
+        {
+            var audio = document.getElementById(audioId);
+                if (audio) 
+                {
+                    audio.pause();
+                }
+        }
+
+        function continueMusic(audioId) 
+        {
+            var audio = document.getElementById(audioId);
+                if (audio) 
+                {
+                    audio.play();
+                }
+        }
+
+        function deleteEverything() 
+        {
+            document.body.innerHTML = '';
+        }
+
+        function showHiddenEnvelope() 
+        {
+            var hiddenEnvelope = document.getElementById("envelope");
+            hiddenEnvelope.style.display = "block";
+        }
+
+
+        function openEnvelope() 
+        {
+            var envelope = document.getElementById("envelope");
+            envelope.classList.toggle("open");
+        }
+
+        document.getElementById('button_open_envelope').addEventListener('click', function() 
+    {
+        var topFlap = document.querySelector('.top');
+        var message = document.querySelector('.message');
+        var heartButton = document.getElementById('button_open_envelope');
+  
+        topFlap.classList.add('open');
+        message.style.visibility = 'hidden';
+  
+        setTimeout(function() {
+            message.classList.add('pull');
+        }, 1500);
+  
+ 
+        heartButton.disabled = true;
+        heartButton.style.color = '#e62828';
+
+        if (topFlap.classList.contains('open')) 
+        {
+            setTimeout(function() 
+            {
+                typeLetter("January, February, March, April, May…                  . So much time has went by and I didn’t even notice it.                 And for half of that time...                I’ve had this thought in my mind...                 Since it’s May, I got this question for you....                                         'May I be your girlfriend?'", 0);
+            }, 6000); 
+        }
+
+        delayButtonVisibility('buttonYesNo', 42000);
+    });
+
+        function createRandomDiv() 
+        {
+            var div = document.createElement('div');
+
+            div.classList.add('random-div');
+
+            div.style.left = Math.random() * (window.innerWidth - 100) + 'px'; 
+            div.style.top = Math.random() * (window.innerHeight - 100) + 'px'; 
+            document.body.appendChild(div);
+
+        
+            var img = document.createElement('img');
+    
+            var gifUrls = 
+            [
+                'gif/1.png',
+                'gif/2.gif',
+                'gif/2.gif',
+                'gif/3.gif'
+            ];
+            var randomIndex = Math.floor(Math.random() * gifUrls.length);
+            img.src = gifUrls[randomIndex];
+
+            img.style.width = '100%';
+            img.style.height = '100%';
+
+            div.appendChild(img);
+
+            setTimeout(function() 
+            {
+                div.style.display = 'none';
+            }, 5000);
+            updateButtonLabel();
+        }
+
+        var sizeIncrement = 0;
+        var popUpNoCounter = 0;
+
+        function popUpNo() 
+        {
+            var div = document.createElement('div');
+ 
+            div.classList.add('random-div');
+
+            div.style.left = Math.random() * (window.innerWidth - 100) + 'px'; 
+            div.style.top = Math.random() * (window.innerHeight - 100) + 'px'; 
+      
+            document.body.appendChild(div);
+
+   
+            var img = document.createElement('img');
+
+            var gifUrls = [
+                'https://static-00.iconduck.com/assets.00/crying-face-emoji-2048x2048-fmird28e.png',
+                'https://static-00.iconduck.com/assets.00/loudly-crying-face-emoji-512x512-7m5a7fnm.png'
+            ];
+            var randomIndex = Math.floor(Math.random() * gifUrls.length);
+            img.src = gifUrls[randomIndex];
+
+            img.style.width = '50%';
+            img.style.height = '50%';
+   
+            div.appendChild(img);
+            document.getElementById("oofSound").play();
+
+            popUpNoCounter++;
+
+            setTimeout(function() {
+            div.style.display = 'none';
+            }, 1000); 
+
+            enlargeButton();
+            div.style.zIndex = '1001';
+
+            if (popUpNoCounter === 4) 
+            {
+                var buttonToHide = document.getElementById('noButton');
+                buttonToHide.style.display = 'none';
+            }
+        }
+
+        function enlargeButton() 
+        {
+            var otherButton = document.getElementById('yesButton');
+            sizeIncrement += 0.5;
+            otherButton.style.transform = 'scale(' + (1 + sizeIncrement) + ')'; 
+        }
+
+        function yesButton()
+        {
+            var elementsToRemove = document.querySelectorAll('body > :not(.keep):not(#backgroundMusic)');
+
+            elementsToRemove.forEach(function(element) 
+            {
+                element.parentNode.removeChild(element);
+            });
+
+            var newDiv = document.createElement('div');
+            var gifImg = document.createElement('img');
+            gifImg.src = 'https://i.pinimg.com/originals/47/98/fb/4798fb9b91a34de450ffcbc93a3792f4.gif';
+            newDiv.appendChild(gifImg);
+
+            newDiv.classList.add('keep');
+
+            document.body.appendChild(newDiv);
+
+            continueMusic('backgroundMusic');
+        }
+
+        var buttonLabels = ["Keep on Pressing", "Click me", "Spam me"];
+        var labelIndex = 0;
+
+        function updateButtonLabel() 
+        {
+  
+            var button = document.getElementById("cutePressMe");
+
+            button.textContent = buttonLabels[labelIndex];
+
+            labelIndex = (labelIndex + 1) % buttonLabels.length;
+        }
+
+    </script>
+</body>
+</html>
